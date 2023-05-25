@@ -13,3 +13,6 @@ class User(models.Model):
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f'{self.name}, {self.user_name}'
