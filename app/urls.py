@@ -19,9 +19,12 @@ from django.contrib.auth import views as auth_views
 # from django.contrib.auth import urls
 from django.urls import path, include
 
+from . import api
+
 urlpatterns = [
     path("accounts/login/", auth_views.LoginView.as_view(redirect_authenticated_user=True)),
     path("accounts/", include("django.contrib.auth.urls")),
     path('admin/', admin.site.urls),
-    path('', include("home.urls")),
+    path('', include("home.views.urls")),
+    path('api/', include(api)),
 ]
