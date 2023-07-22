@@ -303,5 +303,7 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/django,node
 
+.vscode
+
 !ruta_admin/static/ruta_admin/visual724/dist
 !ruta_admin/static/ruta_admin/visual724/vendors/metisMenu/dist
