@@ -1,13 +1,8 @@
 from django.db import models
 
-
-class Customer(models.Model):
+class Phase(models.Model):
     name = models.CharField(max_length=255)
-    dni = models.CharField(max_length=10)
-    ruc = models.CharField(max_length=11)
-    address = models.TextField(blank=True)
-    phone = models.CharField(max_length=20)
-    email = models.CharField(max_length=255, blank=True)
+    sequence = models.IntegerField(default=0)
     STATUS_CHOICES = [
         (1, 'activo'),
         (0,'inactivo'),
@@ -17,4 +12,4 @@ class Customer(models.Model):
     update_date = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f'{self.name}'
+        return f'{self.sequence} - {self.name}'

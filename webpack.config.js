@@ -12,6 +12,10 @@ module.exports = {
             import: "./customer/src/index.js",
             filename: "customer/static/customer/js/index.js",
         },
+        work_index: {
+            import: "./work/src/index.js",
+            filename: "work/static/work/js/index.js",
+        },
     },
     mode: "development",
     //mode: "production",

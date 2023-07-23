@@ -32,9 +32,12 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'rest_framework',
-    'home.apps.HomeConfig',
-    'customer.apps.CustomerConfig',
     'account.apps.AccountConfig',
+    'customer.apps.CustomerConfig',
+    'employee.apps.EmployeeConfig',
+    'home.apps.HomeConfig',
+    'phase.apps.PhaseConfig',
+    'work.apps.WorkConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

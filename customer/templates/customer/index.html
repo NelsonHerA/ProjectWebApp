@@ -17,6 +17,7 @@
 </head>
 
 <body>
+    {% csrf_token %}
     <nav class="navbar sticky-top bg-dark flex-sm-nowrap p-0 shadow" data-bs-theme="dark">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Insanity</a>
         <ul class="navbar-nav flex-row d-sm-none">
@@ -190,10 +191,10 @@
                         <button id="remove" title="Crear nuevo Cliente"><span data-bs-toggle="modal"
                                 data-bs-target="#add-center-modal" class="material-icons">add</span></button>
                     </div>
-                    <table class="table table-striped table-sm" data-toggle="table" data-side-pagination="server"
+                    <table id="customer_table" class="table table-striped table-sm" data-toggle="table" data-side-pagination="server"
                         data-toolbar="#toolbar" data-pagination="true" data-search="true" data-searchable="true"
                         data-url="{% url 'api_customers' %}" data-maintain-meta-data="true" data-show-export="false"
-                        data-show-refresh="false" data-export-types=['txt','csv']>
+                        data-show-refresh="true" data-export-types=['txt','csv']>
                         <thead>
                             <tr>
                                 <th scope="col" data-field="id">ID</th>
@@ -201,7 +202,9 @@
                                 <th scope="col" data-field="dni">DNI</th>
                                 <th scope="col" data-field="ruc">RUC</th>
                                 <th scope="col" data-field="phone">Teléfono</th>
-                                <th scope="col" data-formatter="optionsDateFormater">Opciones</th>
+                                <th scope="col" data-field="address">Dirección</th>
+                                <th scope="col" data-field="email">Email</th>
+                                <th scope="col" data-formatter="optionsDateFormater"  data-events="tableCustomerEvents">Opciones</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -222,17 +225,49 @@
                 </div>
                 <div class="modal-body">
                     <label for="add-center-input" class="form-label">Nombre del Cliente</label>
-                    <input type="text" class="form-control" id="add-center-input">
+                    <input type="text" class="form-control" id="customer_name">
                     <label for="add-center-input" class="form-label">DNI</label>
-                    <input type="text" class="form-control" id="add-center-input">
+                    <input type="text" class="form-control" id="customer_dni">
                     <label for="add-center-input" class="form-label">Ruc</label>
-                    <input type="text" class="form-control" id="add-center-input">
+                    <input type="text" class="form-control" id="customer_ruc">
                     <label for="add-center-input" class="form-label">Telefono</label>
-                    <input type="text" class="form-control" id="add-center-input">
+                    <input type="text" class="form-control" id="customer_phone">
                     <label for="add-center-input" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="add-center-input">
+                    <input type="text" class="form-control" id="customer_email">
                     <label for="add-center-input" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="add-center-input">
+                    <input type="text" class="form-control" id="customer_address">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Crear cliente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edit customers -->
+    <div class="modal fade" id="edit-customer" tabindex="-1" aria-labelledby="add-center-modal-label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="add-center-modal-label">Editar Cliente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="customer_edit_id">
+                    <label for="add-center-input" class="form-label">Nombre del Cliente</label>
+                    <input type="text" class="form-control" id="customer_edit_name">
+                    <label for="add-center-input" class="form-label">DNI</label>
+                    <input type="text" class="form-control" id="customer_edit_dni">
+                    <label for="add-center-input" class="form-label">Ruc</label>
+                    <input type="text" class="form-control" id="customer_edit_ruc">
+                    <label for="add-center-input" class="form-label">Telefono</label>
+                    <input type="text" class="form-control" id="customer_edit_phone">
+                    <label for="add-center-input" class="form-label">Email</label>
+                    <input type="text" class="form-control" id="customer_edit_email">
+                    <label for="add-center-input" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="customer_edit_address">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
