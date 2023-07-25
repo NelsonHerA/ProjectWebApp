@@ -5,7 +5,7 @@ from employee.models import Employee
 
 class WorkPhase(models.Model):
     phase = models.ForeignKey(Phase, on_delete=models.DO_NOTHING)
-    work = models.ForeignKey(Work, on_delete=models.CASCADE)
+    work = models.ForeignKey(Work, related_name="phases", on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     
     STATUS_CHOICES = [

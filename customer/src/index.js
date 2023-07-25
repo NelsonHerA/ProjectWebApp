@@ -1,7 +1,7 @@
 window.optionsDateFormater = (value, row) => {
     // const isActive = `<div style="display:inline-flex;align-items:center;color:${value ? 'green' : 'red'};"><span class="material-icons">toggle_${value ? 'on' : 'off'}</span></div>`
     const settings = `<div title="Editar" class="btn-edit" style="display:inline-flex;align-items:center;"><span class="material-icons btn-settings">settings</span></div>`;
-    const addProduct = `<div style="display:inline-flex;align-items:center;"><span class="material-icons btn-settings">add_shopping_cart</span></div>`;
+    const addProduct = `<a href="/work/?customer=${row.id}" class="btn-add" style="display:inline-flex;align-items:center;text-decoration: none;color: black;"><span class="material-icons btn-settings">add_shopping_cart</span></a>`;
     const loading = `<div class="spinner-border spinner-border-sm text-success" role="status" style="visibility:hidden;"><span class="visually-hidden">Loading...</span></div>`;
     // const container = `<div style="display:flex;justify-content:space-between;align-items:center">${isActive + settings + loading}</div>`
     const container = `<div style="display:flex;justify-content:space-between;align-items:center">${
@@ -12,6 +12,7 @@ window.optionsDateFormater = (value, row) => {
 
 window.tableCustomerEvents = {
     "click .btn-edit": (e, value, row, index) => showEditModal(row),
+    // "click .btn-add": (e, value, row, index) => showEditModal(row),
 };
 
 const showEditModal = (data) => {

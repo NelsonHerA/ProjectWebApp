@@ -16,6 +16,10 @@ module.exports = {
             import: "./work/src/index.js",
             filename: "work/static/work/js/index.js",
         },
+        phase_index: {
+            import: "./phase/src/index.js",
+            filename: "phase/static/phase/js/index.js",
+        },
     },
     mode: "development",
     //mode: "production",

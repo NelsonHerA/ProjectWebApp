@@ -10,10 +10,11 @@ from django.http import HttpResponseNotFound
 from django.http import JsonResponse
 from django.db.models import Q
 
-from ..models import Customer
-from .serializers import CustomerSerializer
+from ..models import Work
+from .serializers import WorkSerializer
+from phase.models import WorkPhase
 
-class CustomerList(APIView):
+class WorkList(APIView):
     permission_classes = [permissions.IsAuthenticated]
     renderer_classes = [JSONRenderer]
 
@@ -24,22 +25,20 @@ class CustomerList(APIView):
             offset = int(request.GET.get("offset", 0))
             limit = int(request.GET.get("limit", 10))
 
-            customers = Customer.objects.all()
+            works = Work.objects.all()
             if search:
                 print(search)
                 q1 = Q(id__icontains=search)
                 q2 = Q(name__icontains=search)
-                q3 = Q(dni__icontains=search)
-                q4 = Q(ruc__icontains=search)
-                q5 = Q(phone__icontains=search)
-                q6 = Q(address__icontains=search)
-                q7 = Q(email__icontains=search)
-                query = q1 | q2 | q3 | q4 | q5 | q6 | q7
-                search_customers = customers.filter(query)
+                q3 = Q(description__icontains=search)
+                q4 = Q(deadline__icontains=search)
+                q5 = Q(customer__name__icontains=search)
+                query = q1 | q2 | q3 | q4 | q5 
+                search_works = works.filter(query)
             else:
-                search_customers = customers
-            limited_customers = search_customers[offset: offset+limit]
-            serialized = CustomerSerializer(limited_customers, many=True)
+                search_works = works
+            limited_works = search_works[offset: offset+limit]
+            serialized = WorkSerializer(limited_works, many=True)
             return JsonResponse(serialized.data, safe=False)
         except Exception as err:
             print(err)
@@ -47,37 +46,70 @@ class CustomerList(APIView):
         
     def post(self, request, format=None):
         try:
-            serializer = CustomerSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return JsonResponse(serializer.data, status=HTTPStatus.CREATED)
-            return HttpResponseBadRequest(json.dumps(serializer.errors))
+            data = request.data
+            customer_id = data.get("customerId")
+            name = data.get("name")
+            description = data.get("description")
+            date = data.get("date")
+            total_phase = data.get("phase_amount")
+
+            work = Work()
+            work.customer_id = customer_id
+            work.name = name
+            work.description = description
+            work.deadline = date
+            work.total_phase = total_phase
+            work.save()
+            
+            i = 1
+            while True:
+                employee_id = data.get(f"phase{i}")
+                phase_id = data.get(f"phase{i}_id")
+                if employee_id is None:
+                    break
+                work_phase = WorkPhase()
+                work_phase.phase_id = phase_id
+                work_phase.work = work
+                work_phase.employee_id = employee_id
+                if i>1: 
+                    work_phase.status = 0
+                work_phase.save()
+                i+=1
+
+            work = Work.objects.get(pk=1)
+            serializer = WorkSerializer(work)
+            return JsonResponse(serializer.data, status=HTTPStatus.CREATED)
         except Exception as err:
             return HttpResponseServerError(f"Error: {str(err)}")
  
-class CustomerDetail(APIView):
+class WorkDetail(APIView):
     permission_classes = [permissions.IsAuthenticated]
     renderer_classes = [JSONRenderer]
 
     def get(self, request, pk, format=None):
         try:
-            customer = Customer.objects.get(pk=pk)
-            serializer = CustomerSerializer(customer)
+            work = Work.objects.get(pk=pk)
+            serializer = WorkSerializer(work)
             return JsonResponse(serializer.data)
-        except Customer.DoesNotExist as err:
+        except Work.DoesNotExist as err:
             return HttpResponseNotFound()
         except Exception as err:
             return HttpResponseServerError(f"Error: {str(err)}")
 
     def put(self, request, pk, format=None):
         try:
-            customer = Customer.objects.get(pk=pk)
-            serializer = CustomerSerializer(customer, data=request.data)
+            workPhases = request.data.get("workPhases", [])
+            customer = Work.objects.get(pk=pk)
+            serializer = WorkSerializer(customer, data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                for wPhase in workPhases:
+                    phase = WorkPhase.objects.get(pk=wPhase["id"])
+                    phase.employee_id = wPhase["employee"]
+                    phase.save()
                 return JsonResponse(serializer.data)
             return HttpResponseBadRequest(json.dumps(serializer.errors))
-        except Customer.DoesNotExist as err:
+        except Work.DoesNotExist as err:
             return HttpResponseNotFound()
         except Exception as err:
             return HttpResponseServerError(f"Error: {str(err)}")

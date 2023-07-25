@@ -1,6 +1,9 @@
 from rest_framework import serializers
 
-from ..models import Customer
+from ..models import Work
+from customer.models import Customer
+from phase.models import Phase, WorkPhase
+from employee.models import Employee
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     """
@@ -25,4 +28,27 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
 class CustomerSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = Customer
-        fields = ['id', 'name', 'dni', 'ruc', 'address', 'phone', 'email', 'status']
+        fields = ['id', 'name']
+
+class PhaseSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = Phase
+        fields = ['id', 'name', 'sequence']
+
+class EmployeeSerializer(DynamicFieldsModelSerializer):
+    class Meta:
+        model = Employee
+        fields = ['id', 'name']
+class WorkPhaseSerializer(DynamicFieldsModelSerializer):
+    phase = PhaseSerializer(read_only=True)
+    employee = EmployeeSerializer(read_only=True)
+    class Meta:
+        model = WorkPhase
+        fields = ['id', 'phase', 'employee', 'status']
+
+class WorkSerializer(DynamicFieldsModelSerializer):
+    customer = CustomerSerializer(read_only=True)
+    phases = WorkPhaseSerializer(read_only=True, many=True)
+    class Meta:
+        model = Work
+        fields = ['id', 'customer', 'name', 'description', 'deadline', 'delivery_date', 'current_phase', 'total_phase', 'status', 'creation_date', 'phases']

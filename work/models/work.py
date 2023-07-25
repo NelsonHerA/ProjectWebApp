@@ -5,8 +5,8 @@ class Work(models.Model):
     customer = models.ForeignKey("customer.Customer", on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    deadline = models.DateTimeField(auto_now_add=True)
-    delivery_date = models.DateTimeField(auto_now_add=True)
+    deadline = models.DateTimeField()
+    delivery_date = models.DateTimeField(null=True)
     current_phase = models.IntegerField(default=1)
     total_phase = models.IntegerField(default=0)
     STATUS_CHOICES = [
