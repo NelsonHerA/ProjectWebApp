@@ -19,4 +19,4 @@ class WorkPhase(models.Model):
     update_date = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return f'{self.sequence} - {self.name}'
+        return f'{self.phase.name} - {self.status}'

@@ -5,4 +5,6 @@ from . import views
 urlpatterns = [
     path('', views.PhaseList.as_view(), name='api_phase'),
     re_path(r'^(?P<pk>\d+)/$', views.PhaseDetail.as_view()),
+    path('task/', views.WorkPhaseList.as_view(), name='api_work_phase'),
+    re_path(r'^task/(?P<pk>\d+)/$', views.WorkPhaseDetail.as_view()),
 ]

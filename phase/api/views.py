@@ -10,8 +10,8 @@ from django.http import HttpResponseNotFound
 from django.http import JsonResponse
 from django.db.models import Q
 
-from ..models import Phase
-from .serializers import PhaseSerializer
+from ..models import Phase, WorkPhase
+from .serializers import PhaseSerializer, WorkPhaseSerializer
 
 class PhaseList(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -69,6 +69,54 @@ class PhaseDetail(APIView):
         try:
             phase = Phase.objects.get(pk=pk)
             serializer = PhaseSerializer(phase, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return JsonResponse(serializer.data)
+            return HttpResponseBadRequest(json.dumps(serializer.errors))
+        except Phase.DoesNotExist as err:
+            return HttpResponseNotFound()
+        except Exception as err:
+            return HttpResponseServerError(f"Error: {str(err)}")
+
+class WorkPhaseList(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, format=None):
+        try:
+            search = request.GET.get("search", None) 
+            order = request.GET.get("order", "asc")
+            offset = int(request.GET.get("offset", 0))
+            limit = int(request.GET.get("limit", 10))
+
+            employee = request.user.employee
+            work_phases = WorkPhase.objects.filter(employee=employee).order_by('-status')
+            if search:
+                print(search)
+                q1 = Q(id__icontains=search)
+                q2 = Q(work__name__icontains=search)
+                q3 = Q(work__customer__name__icontains=search)
+                q4 = Q(phase__name__icontains=search)
+                q5 = Q(work__description__icontains=search)
+                query = q1 | q2 | q3 | q4 | q5
+                search_work_phase = work_phases.filter(query)
+            else:
+                search_work_phase = work_phases
+            limited_work_phase = search_work_phase[offset: offset+limit]
+            serialized = WorkPhaseSerializer(limited_work_phase, many=True)
+            return JsonResponse(serialized.data, safe=False)
+        except Exception as err:
+            print(err)
+            return HttpResponseServerError(f'Error: {str(err)}')
+
+class WorkPhaseDetail(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    renderer_classes = [JSONRenderer]
+
+    def put(self, request, pk, format=None):
+        try:
+            work_phase = WorkPhase.objects.get(pk=pk)
+            serializer = WorkPhaseSerializer(work_phase, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return JsonResponse(serializer.data)

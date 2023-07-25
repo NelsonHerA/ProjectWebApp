@@ -14,7 +14,7 @@ from ..models import Customer
 from .serializers import CustomerSerializer
 
 class CustomerList(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     renderer_classes = [JSONRenderer]
 
     def get(self, request, format=None):
