@@ -7,11 +7,18 @@ window.customerFormater = (value, row) => {
 };
 
 window.nameFormater = (value, row) => {
-    return `<div style="white-space: nowrap; overflow: hidden; max-width: 10vw; text-overflow: ellipsis;" title="${value}">${value}</div>`;
+    return `<div style="white-space: nowrap; overflow: hidden; max-width: 8vw; text-overflow: ellipsis;" title="${value}">${value}</div>`;
 };
 
 window.descriptionFormater = (value, row) => {
-    return `<div style="white-space: nowrap; overflow: hidden; max-width: 15vw; text-overflow: ellipsis;" title="${value}">${value}</div>`;
+    return `<div style="white-space: nowrap; overflow: hidden; max-width: 12vw; text-overflow: ellipsis;" title="${value}">${value}</div>`;
+};
+
+window.paymentFormater = (value, row) => {
+    return `<div>
+        <div>Precio: <span>${row.price}</span></div>
+        <div>Adelanto: <span>${row.payment}</span></div>
+    </div>`;
 };
 
 window.deadlineFormater = (value, row) => {
@@ -106,6 +113,8 @@ const showEditModal = (data) => {
     document.querySelector("#work_name_edit").value = data.name;
     document.querySelector("#work_description_edit").value = data.description;
     document.querySelector("#work_date_edit").value = data.deadline.slice(0, 16);
+    document.querySelector("#work_price_edit").value = data.price;
+    document.querySelector("#work_payment_edit").value = data.payment;
 
     const $container = document.querySelector("#phases_edit_container");
     const $employees = document.querySelector("#all_employees").innerHTML;
@@ -138,11 +147,15 @@ document.querySelector("#add-work-modal .btn-primary").addEventListener("click",
     const name = document.querySelector("#work_name").value;
     const description = document.querySelector("#work_description").value;
     const date = document.querySelector("#work_date").value;
+    const price = +document.querySelector("#work_price").value;
+    const payment = +document.querySelector("#work_payment").value;
 
     data.customerId = customerId;
     data.name = name;
     data.description = description;
     data.date = date;
+    data.price = price;
+    data.payment = payment;
 
     let i = 1;
     while (true) {
@@ -189,11 +202,15 @@ document.querySelector("#edit-work-modal .btn-primary").addEventListener("click"
     const name = document.querySelector("#work_name_edit").value;
     const description = document.querySelector("#work_description_edit").value;
     const date = document.querySelector("#work_date_edit").value;
+    const price = +document.querySelector("#work_price_edit").value;
+    const payment = +document.querySelector("#work_payment_edit").value;
 
     data.id = id;
     data.name = name;
     data.description = description;
     data.deadline = date;
+    data.price = price;
+    data.payment = payment;
     const phases = [];
 
     for (const child of document.querySelector("#phases_edit_container").children) {

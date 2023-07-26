@@ -9,6 +9,8 @@ class Work(models.Model):
     delivery_date = models.DateTimeField(null=True)
     current_phase = models.IntegerField(default=1)
     total_phase = models.IntegerField(default=0)
+    price = models.FloatField(default=0)
+    payment = models.FloatField(default=0)
     STATUS_CHOICES = [
         (1, 'activo'),
         (0,'inactivo'),

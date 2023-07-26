@@ -12,6 +12,7 @@ from django.db.models import Q
 
 from ..models import Phase, WorkPhase
 from .serializers import PhaseSerializer, WorkPhaseSerializer
+from employee.models import Employee
 
 class PhaseList(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -119,9 +120,53 @@ class WorkPhaseDetail(APIView):
             serializer = WorkPhaseSerializer(work_phase, data=request.data)
             if serializer.is_valid():
                 serializer.save()
+
+                work_phase = WorkPhase.objects.get(pk=pk)
+                prev_is_end = False
+                if work_phase.status == 3:
+                    for task in work_phase.work.phases.all():
+                        if prev_is_end:
+                            task.work.current_phase = task.work.current_phase + 1
+                            task.work.save()
+                            task.status = 1
+                            task.save()
+                            prev_is_end = False
+                        if task.id == int(pk):
+                            prev_is_end = True
                 return JsonResponse(serializer.data)
             return HttpResponseBadRequest(json.dumps(serializer.errors))
         except Phase.DoesNotExist as err:
             return HttpResponseNotFound()
         except Exception as err:
             return HttpResponseServerError(f"Error: {str(err)}")
+        
+class WorkPhaseEmployeeList(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    renderer_classes = [JSONRenderer]
+
+    def get(self, request, pk, format=None):
+        try:
+            search = request.GET.get("search", None) 
+            order = request.GET.get("order", "asc")
+            offset = int(request.GET.get("offset", 0))
+            limit = int(request.GET.get("limit", 10))
+
+            employee = Employee.objects.get(pk=pk)
+            work_phases = WorkPhase.objects.filter(employee=employee).order_by('-status')
+            if search:
+                print(search)
+                q1 = Q(id__icontains=search)
+                q2 = Q(work__name__icontains=search)
+                q3 = Q(work__customer__name__icontains=search)
+                q4 = Q(phase__name__icontains=search)
+                q5 = Q(work__description__icontains=search)
+                query = q1 | q2 | q3 | q4 | q5
+                search_work_phase = work_phases.filter(query)
+            else:
+                search_work_phase = work_phases
+            limited_work_phase = search_work_phase[offset: offset+limit]
+            serialized = WorkPhaseSerializer(limited_work_phase, many=True)
+            return JsonResponse(serialized.data, safe=False)
+        except Exception as err:
+            print(err)
+            return HttpResponseServerError(f'Error: {str(err)}')

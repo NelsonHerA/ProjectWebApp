@@ -125,10 +125,10 @@ const stopTask = async (task) => {
     }
 };
 
-document.querySelector("#add-employee-modal .btn-primary").addEventListener("click", async (e) => {
+document.querySelector("#edit-employee-modal .btn-primary").addEventListener("click", async (e) => {
+    const id = document.querySelector("#employee_id").value;
     const name = document.querySelector("#employee_name").value;
     const username = document.querySelector("#employee_username").value;
-    const password = document.querySelector("#employee_password").value;
     const rol = document.querySelector("#employee_rol").value;
     const dni = document.querySelector("#employee_dni").value;
     const address = document.querySelector("#employee_address").value;
@@ -138,7 +138,6 @@ document.querySelector("#add-employee-modal .btn-primary").addEventListener("cli
     const data = {
         name: name,
         username: username,
-        password: password,
         dni: dni,
         rol: rol,
         phone: phone,
@@ -147,8 +146,8 @@ document.querySelector("#add-employee-modal .btn-primary").addEventListener("cli
     };
 
     try {
-        const response = await fetch("/api/employee/", {
-            method: "POST",
+        const response = await fetch(`/api/employee/${id}/`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
@@ -164,6 +163,6 @@ document.querySelector("#add-employee-modal .btn-primary").addEventListener("cli
     } catch (error) {
         const text = await error.text();
         console.log(text);
-        alert("El nuevo empleado no se pudo guardar. :(");
+        alert("El  empleado no se pudo actualizar. :(");
     }
 });

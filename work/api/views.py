@@ -52,12 +52,16 @@ class WorkList(APIView):
             description = data.get("description")
             date = data.get("date")
             total_phase = data.get("phase_amount")
+            price = data.get("price")
+            payment = data.get("payment")
 
             work = Work()
             work.customer_id = customer_id
             work.name = name
             work.description = description
             work.deadline = date
+            work.price = price
+            work.payment = payment
             work.total_phase = total_phase
             work.save()
             

@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255)
+    rol = models.CharField(max_length=255, default="Diseñador")
     dni = models.CharField(max_length=10)
     address = models.TextField(blank=True)
     phone = models.CharField(max_length=20)

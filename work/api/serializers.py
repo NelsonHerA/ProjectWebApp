@@ -51,4 +51,4 @@ class WorkSerializer(DynamicFieldsModelSerializer):
     phases = WorkPhaseSerializer(read_only=True, many=True)
     class Meta:
         model = Work
-        fields = ['id', 'customer', 'name', 'description', 'deadline', 'delivery_date', 'current_phase', 'total_phase', 'status', 'creation_date', 'phases']
+        fields = ['id', 'customer', 'name', 'description', 'deadline', 'delivery_date', 'current_phase', 'total_phase', 'status', 'creation_date', 'phases', 'price', 'payment']

@@ -1,23 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    {% load static %}
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asignaciones</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'home/css/style.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'employee/css/style.css' %}" />
+    <title>Empleado</title>
 </head>
 
 <body>
@@ -44,17 +41,32 @@
     <div class="container-fluid">
         <div class="row">
             <div class="sidebar col-md-3 col-lg-2 p-0 bg-body-tertiary">
-                <div class="offcanvas-lg offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
-                    aria-labelledby="sidebarMenuLabel">
+                <div
+                    class="offcanvas-lg offcanvas-end bg-body-tertiary"
+                    tabindex="-1"
+                    id="sidebarMenu"
+                    aria-labelledby="sidebarMenuLabel"
+                >
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="sidebarMenuLabel">Insanity</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                            data-bs-target="#sidebarMenu" aria-label="Close"></button>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="offcanvas"
+                            data-bs-target="#sidebarMenu"
+                            aria-label="Close"
+                        ></button>
                     </div>
-                    <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+                    <div
+                        class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto"
+                    >
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="/">
+                                <a
+                                    class="nav-link d-flex align-items-center gap-2 active"
+                                    aria-current="page"
+                                    href="/"
+                                >
                                     <svg class="bi">
                                         <use xlink:href="#house-fill"></use>
                                     </svg>
@@ -63,7 +75,10 @@
                             </li>
                             {% if user.is_staff %}
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="/work/">
+                                <a
+                                    class="nav-link d-flex align-items-center gap-2"
+                                    href="/work/"
+                                >
                                     <svg class="bi">
                                         <use xlink:href="#file-earmark"></use>
                                     </svg>
@@ -79,7 +94,10 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="/customer/">
+                                <a
+                                    class="nav-link d-flex align-items-center gap-2"
+                                    href="/customer/"
+                                >
                                     <svg class="bi">
                                         <use xlink:href="#people"></use>
                                     </svg>
@@ -95,7 +113,10 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="/phase/">
+                                <a
+                                    class="nav-link d-flex align-items-center gap-2"
+                                    href="/phase/"
+                                >
                                     <svg class="bi">
                                         <use xlink:href="#puzzle"></use>
                                     </svg>
@@ -106,21 +127,26 @@
                         </ul>
                         {% if user.is_staff %}
                         <h6
-                            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                            <span style="white-space: nowrap;">Empleados y asignaciones</span>
-                            <button style="display: flex; border: none; background-color: transparent;"
-                                title="Agregar nuevo empleado" class="link-secondary clickable"
-                                aria-label="Agregar nuevo empleado" data-bs-toggle="modal"
-                                data-bs-target="#add-employee-modal">
+                            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase"
+                        >
+                            <span>Empleados y asignaciones</span>
+                            <span
+                                title="Agregar nuevo empleado"
+                                class="link-secondary clickable"
+                                aria-label="Agregar nuevo empleado"
+                            >
                                 <svg class="bi">
                                     <use xlink:href="#plus-circle"></use>
                                 </svg>
-                            </button>
+                            </span>
                         </h6>
                         <ul class="nav flex-column mb-auto">
                             {% for employee in employees %}
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="/employee/{{employee.id}}/">
+                                <a
+                                    class="nav-link d-flex align-items-center gap-2"
+                                    href="/employee/{{employee.id}}/"
+                                >
                                     <svg class="bi">
                                         <use xlink:href="#file-earmark-text"></use>
                                     </svg>
@@ -134,9 +160,12 @@
                         <ul class="nav flex-column mb-auto">
                             <li class="nav-item">
                                 <!-- <form action="{% url 'password_change'%}">
-                                    <input type="submit" value="Cambiar contraseña" />
-                                </form> -->
-                                <a class="nav-link d-flex align-items-center gap-2" href="{% url 'password_change'%}">
+                                <input type="submit" value="Cambiar contraseña" />
+                            </form> -->
+                                <a
+                                    class="nav-link d-flex align-items-center gap-2"
+                                    href="{% url 'password_change'%}"
+                                >
                                     <svg class="bi">
                                         <use xlink:href="#gear-wide-connected"></use>
                                     </svg>
@@ -146,7 +175,10 @@
                             <li class="nav-item">
                                 <form method="post" action="{% url 'logout'%}">
                                     {% csrf_token %}
-                                    <button type="submit" class="nav-link d-flex align-items-center gap-2">
+                                    <button
+                                        type="submit"
+                                        class="nav-link d-flex align-items-center gap-2"
+                                    >
                                         <svg class="bi">
                                             <use xlink:href="#door-closed"></use>
                                         </svg>
@@ -159,13 +191,50 @@
                 </div>
             </div>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="row">
+                    <div class="col" style="padding-block-start: 1rem;">
+                        <div style="display: flex;align-items: baseline;margin-block-end: 1rem;">
+                            <h3 style="margin-inline-end: 1rem;">{{current_employee.name}}</h3>
+                            <h6 style="font-weight: 300;">Datos Personales</h6>
+                            <div style="margin-inline-start: 1rem;">
+                                <span title="Editar" class="material-symbols-outlined clickable" data-bs-toggle="modal" data-bs-target="#edit-employee-modal">border_color</span>
+                            </div>
+                        </div>
+                        <div style="padding-inline-start: 2rem;display: flex;">
+                            <div style="flex-grow: 1;display: flex;">
+                                <div style="flex-grow: 1;">
+                                    <p style="font-weight: 500;">Usuario:</p>
+                                    <p style="font-weight: 500;">Rol:</p>
+                                    <p style="font-weight: 500;">DNI:</p>
+                                </div>
+                                <div style="flex-grow: 3;">
+                                    <p style="border: 2px solid lightskyblue; border-radius: 5px; margin-inline-end: 5rem; padding-inline: 1rem;min-height: 1.2lh">{{current_employee.user}}</p>
+                                    <p style="border: 2px solid lightskyblue; border-radius: 5px; margin-inline-end: 5rem; padding-inline: 1rem;min-height: 1.2lh">{{current_employee.rol}}</p>
+                                    <p style="border: 2px solid lightskyblue; border-radius: 5px; margin-inline-end: 5rem; padding-inline: 1rem;min-height: 1.2lh;">{{current_employee.dni}}</p>
+                                </div>
+                            </div>
+                            <div style="flex-grow: 1;display: flex;">
+                                <div style="flex-grow: 1;">
+                                    <p style="font-weight: 500;">Direccion:</p>
+                                    <p style="font-weight: 500;">Telefono:</p>
+                                    <p style="font-weight: 500;">Email:</p>
+                                </div>
+                                <div style="flex-grow: 3;">
+                                    <p style="border: 2px solid lightskyblue; border-radius: 5px; margin-inline-end: 5rem; padding-inline: 1rem;min-height: 1.2lh">{{current_employee.address}}</p>
+                                    <p style="border: 2px solid lightskyblue; border-radius: 5px; margin-inline-end: 5rem; padding-inline: 1rem;min-height: 1.2lh;">{{current_employee.phone}}</p>
+                                    <p style="border: 2px solid lightskyblue; border-radius: 5px; margin-inline-end: 5rem; padding-inline: 1rem;min-height: 1.2lh;">{{current_employee.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="table-responsive small">
                     <div id="toolbar" style="display: flex;">
                         <h3>Tareas asignadas</h3>
                     </div>
                     <table id="task_table" class="table table-striped table-sm" data-toggle="table"
                         data-side-pagination="server" data-toolbar="#toolbar" data-pagination="true" data-search="true"
-                        data-searchable="true" data-url="{% url 'api_work_phase' %}" data-maintain-meta-data="true"
+                        data-searchable="true" data-url="/api/phase/task/employee/{{pk}}/" data-maintain-meta-data="true"
                         data-show-export="false" data-show-refresh="true" data-export-types=['txt','csv']>
                         <thead>
                             <tr>
@@ -177,8 +246,6 @@
                                 </th>
                                 <th scope="col" data-field="phase.name">Tarea</th>
                                 <th scope="col" data-field="status" data-formatter="statusFormatter">Estado</th>
-                                <th scope="col" data-formatter="optionsDateFormater" data-events="tableCustomerEvents">
-                                    Acciones</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -188,41 +255,40 @@
         </div>
     </div>
 
-
-    <!-- Modal add employee -->
-    <div class="modal fade" id="add-employee-modal" tabindex="-1" aria-labelledby="add-employee-modal-label"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="add-employee-modal-label">Crear Empleado</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <label for="employee_name" class="form-label">Nombre del Empleado</label>
-                    <input type="text" class="form-control" id="employee_name">
-                    <label for="employee_username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="employee_username">
-                    <label for="employee_password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="employee_password">
-                    <label for="employee_rol" class="form-label">Rol</label>
-                    <input type="text" class="form-control" id="employee_rol">
-                    <label for="employee_dni" class="form-label">DNI</label>
-                    <input type="text" class="form-control" id="employee_dni">
-                    <label for="employee_address" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="employee_address">
-                    <label for="employee_phone" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" id="employee_phone">
-                    <label for="employee_email" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="employee_email">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Crear empleado</button>
-                </div>
-            </div>
+<!-- Modal edit employee -->
+<div class="modal fade" id="edit-employee-modal" tabindex="-1" aria-labelledby="edit-employee-modal-label"
+aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="edit-employee-modal-label">Editar Empleado</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="employee_id" value="{{current_employee.id}}">
+            <label for="employee_name" class="form-label">Nombre del Empleado</label>
+            <input type="text" class="form-control" id="employee_name" value="{{current_employee.name}}">
+            <label for="employee_username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="employee_username" value="{{current_employee.user.username}}">
+            <label for="employee_rol" class="form-label">Rol</label>
+            <input type="text" class="form-control" id="employee_rol" value="{{current_employee.rol}}">
+            <label for="employee_dni" class="form-label">DNI</label>
+            <input type="text" class="form-control" id="employee_dni" value="{{current_employee.dni}}">
+            <label for="employee_address" class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="employee_address" value="{{current_employee.address}}">
+            <label for="employee_phone" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" id="employee_phone" value="{{current_employee.phone}}">
+            <label for="employee_email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="employee_email" value="{{current_employee.email}}">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary">Guardar cambios</button>
         </div>
     </div>
+</div>
+</div>
+
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
         <symbol id="calendar3" viewBox="0 0 16 16">
@@ -294,7 +360,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
-    <script src="{% static 'home/js/index.js' %}"></script>
+    <script src="{% static 'employee/js/index.js' %}"></script>
 </body>
 
 </html>

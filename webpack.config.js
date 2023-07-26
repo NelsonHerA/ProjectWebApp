@@ -20,6 +20,10 @@ module.exports = {
             import: "./phase/src/index.js",
             filename: "phase/static/phase/js/index.js",
         },
+        employee_index: {
+            import: "./employee/src/index.js",
+            filename: "employee/static/employee/js/index.js",
+        },
     },
     mode: "development",
     //mode: "production",
