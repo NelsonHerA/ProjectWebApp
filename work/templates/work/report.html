@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reporte TekloCloud</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+                "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+            background-color: rgb(210, 210, 210);
+        }
+
+        .panel {
+            display: flex;
+            justify-content: flex-end;
+            position: sticky;
+            inset-block-start: 0;
+            background-color: rgb(15, 0, 80);
+            padding: 0.4rem;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+
+        .panel .btn-print {
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        .panel .btn-print:hover {
+            box-shadow: rgba(227, 208, 3, 0.829) 0px 0px 0px 2px,
+                rgba(179, 227, 5, 0.65) 0px 4px 6px -1px,
+                rgba(227, 17, 17, 0.903) 0px 1px 0px inset;
+        }
+
+        .panel .btn-print:active {
+            transform: scale(0.99);
+        }
+
+        .wrapper-print {
+            padding-top: 10mm;
+            padding-bottom: 10mm;
+            max-inline-size: 595pt;
+            margin: 0 auto;
+            margin-top: 10mm;
+            margin-top: 10mm;
+            background-color: white;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+
+        /* A4 = 595pt x 842pt | 1mm == 2.83465 pt */
+        .print {
+            background-color: white;
+            display: block;
+            inline-size: 785pt;
+            /* 842pt - 20mm */
+            inline-size: 538pt;
+            /* 595pt - 20mm */
+            margin: 0 auto;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+                    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+                background-color: white;
+            }
+
+            .panel {
+                display: none;
+            }
+
+            .wrapper-print {
+                padding: 0;
+                max-inline-size: 100%;
+                margin: 0;
+                background-color: white;
+                box-shadow: none;
+            }
+
+            #action {
+                display: none;
+            }
+        }
+
+        @media print and (orientation: landscape) {
+            .print {
+                inline-size: 785pt;
+            }
+        }
+    </style>
+    <style>
+        .title h1 {
+            text-align: center;
+            border-bottom: 1px solid gray;
+        }
+
+        .section {
+            padding-top: 12pt;
+        }
+
+        table {
+            font-size: 8pt;
+            inline-size: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            break-after: page;
+        }
+
+        table thead {
+            border-top: 1pt solid black;
+            border-bottom: 1pt solid black;
+            background-color: aquamarine;
+        }
+
+        table thead th {
+            padding: 5pt;
+            letter-spacing: 1pt;
+        }
+
+        table tbody {
+            font-weight: 500;
+        }
+
+        table tbody td {
+            border-bottom: 1px solid #00000048;
+            padding: 7pt;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    {% load static %}
+    <div class="panel">
+        <button id="action" class="btn-print">
+            <span class="material-symbols-outlined">print</span>
+        </button>
+    </div>
+    <div class="wrapper-print">
+        <div class="print">
+            <div style="display: flex;">
+                <div style="background-color: aqua;width: 100pt;height: 100pt;border-radius: 10pt;overflow: hidden;">
+                    <img style="width: 100%;" src="{% static '/home/image/logo.jpeg' %}" alt="">
+                </div>
+                <div style="/*background-color: rgb(208, 255, 0);*/height: 100pt; flex-grow: 1;text-align: center;">
+                    <div>
+                        <span style="font-size: 18pt; font-weight: 500;font-family: 'Oswald', sans-serif;">LAUTREC
+                            COMPAÑIA PUBLICITARIA</span>
+                        <span
+                            style="font-size: 10pt; font-weight: 500;font-family: 'Oswald', sans-serif;">E.I.R.L.</span>
+                    </div>
+                    <div style="font-size: 10pt; font-weight: 400;font-family: 'Oswald', sans-serif;">GIGANTOGRAFÍAS -
+                        MARKETING - MERCHANDISING -
+                        ESTAMPADOS</div>
+                    <div style="font-size: 10pt; font-weight: 400;font-family: 'Oswald', sans-serif;">Jr. Tarapacá N°
+                        325 Int. A - Pucallpa - Telf.:
+                        061-605601 - Cel.: 972427365</div>
+                    <div style="font-size: 12pt; font-weight: 500;font-family: 'Oswald', sans-serif;">972 427 365</div>
+                    <div style="font-size: 10pt; font-weight: 500;font-family: 'Oswald', sans-serif;">Cta. Ahorros BCP:
+                        48076308155006 / CCI:
+                        00248017630815500625</div>
+                </div>
+                <div
+                    style="/*background-color: rgb(30, 255, 0);*/text-align: center;width: 150pt;height: 100pt;border: 2pt solid black;border-radius: 10pt;box-sizing: border-box;box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;">
+                    <div
+                        style="font-size: 12pt;letter-spacing: 1pt;line-height: 30pt; font-weight: 500;font-family: 'Oswald', sans-serif;">
+                        R.U.C. 20610595759
+                    </div>
+                    <div style="font-size: 16pt; font-weight: 500;font-family: 'Oswald', sans-serif;">PROFORMA</div>
+                    <div
+                        style="font-size: 16pt; font-weight: 400;line-height: 40pt;font-family: 'Oswald', sans-serif;color: red;">
+                        N°
+                        <span>0000000</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="display: flex;font-family: 'Oswald', sans-serif;font-size: 12pt;font-weight: 400;margin-block-start: 10pt;">
+                <div style="flex-grow: 1;">
+                    <div style="display: flex;line-height: 10pt;margin-block-end: 12pt;">
+                        <div>Socio Club:</div>
+                        <div
+                            style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
+                            Juan
+                            José Dolci Flores</div>
+                    </div>
+                    <div style="display: flex;line-height: 10pt;">
+                        <div style="flex-grow: 1;display: flex;">
+                            <div>Ref. Diseño:</div>
+                            <div
+                                style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
+                            </div>
+                        </div>
+                        <div style="width: 140pt;display: flex;">
+                            <div>Cel.:</div>
+                            <div
+                                style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
+                                954966113</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 140pt;">
+                    <div style="display: flex;line-height: 10pt;margin-block-end: 12pt;">
+                        <div>RUC:</div>
+                        <div
+                            style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
+                        </div>
+                    </div>
+                    <div style="display: flex;line-height: 10pt;margin-block-end: 12pt;">
+                        <div>Fecha:</div>
+                        <div
+                            style="flex-grow: 1;border: 1pt solid black;border-radius: 4pt;margin-inline: 5pt;height: 18pt;margin-block-start: -8pt;line-height: 17pt;display: flex;text-align: center;">
+                            <div style="flex-grow: 4;">26</div>
+                            <div style="flex-grow: 4;border-inline: 1pt solid black;">07</div>
+                            <div style="flex-grow: 6;">2023</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="display: flex;font-weight: 500; color: white;background-color: black;font-family: 'Oswald', sans-serif;text-align: center;border-radius: 5pt;">
+                <div style="flex-grow: 1;border-inline-end: 2pt solid white;">DESCRIPCION / MATERIAL</div>
+                <div style="width: 72pt;">TOTAL</div>
+            </div>
+            <div
+                style="display: flex;font-family: 'Oswald', sans-serif;text-align: justify;border-radius: 5pt;border: 2pt solid black; margin-block-start: 2pt;min-block-size: 50pt;">
+                <div style="flex-grow: 1;border-inline-end: 2pt solid black;"></div>
+                <div style="width: 70pt;text-align: center;">S/. 000.00</div>
+            </div>
+            <div style="display: flex;">
+                <div
+                    style="flex-grow: 1;font-family: 'Oswald', sans-serif;display: flex;flex-direction: column;justify-content: space-between;padding-inline-end: 20pt;">
+                    <div>
+                        <div style="font-size: 8pt;font-weight: 500;">"UNA VEZ RECIBIDO EL TRABAJO SIRVASE CANJEAR POR
+                            BOLETA DE VENTA O FACTURA"</div>
+                        <div
+                            style="font-size: 10pt;font-weight: 500;letter-spacing: .5pt;display: flex;align-items: center;">
+                            Siganos en <span><img src="{% static '/home/image/facebook.svg' %}" style="width: 18pt;"
+                                    alt=""></span>
+                            @insanitygraphicspucallpa insanity.pucallpa@gmail.com</div>
+                    </div>
+                    <div>
+                        <div style="display: flex;font-size: 10pt;font-weight: 500;">
+                            <div style="flex-grow: 1;display: flex;">
+                                <div>Ejecutivo de ventas:</div>
+                                <div
+                                    style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
+                                </div>
+                            </div>
+                            <div style="flex-grow: 1;display: flex;">
+                                <div>Ejecutivo creativo:</div>
+                                <div
+                                    style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div style="font-size: 12pt;font-weight: 500;display: flex;justify-content: space-around;">
+                            <div>GRACIAS</div>
+                            <div>GRACIAS</div>
+                            <div>GRACIAS</div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 145pt;text-align: center;font-family: 'Oswald', sans-serif;">
+                    <div style="display: flex;margin-block-start: 2pt;">
+                        <div style="flex-grow: 1;border: 2pt solid black;border-radius: 4pt;font-weight: 500;">TOTAL S/
+                        </div>
+                        <div
+                            style="box-sizing: border-box;width: 73pt;border: 2pt solid black;border-radius: 4pt;margin-inline-start: 2pt;text-align: end;padding-inline-end: 10pt;">
+                            000.00</div>
+                    </div>
+                    <div style="display: flex;margin-block-start: 2pt;">
+                        <div style="flex-grow: 1;border: 2pt solid black;border-radius: 4pt;font-weight: 500;">A CUENTA
+                            S/</div>
+                        <div
+                            style="box-sizing: border-box;width: 73pt;border: 2pt solid black;border-radius: 4pt;margin-inline-start: 2pt;text-align: end;padding-inline-end: 10pt;">
+                            000.00</div>
+                    </div>
+                    <div style="display: flex;margin-block-start: 2pt;">
+                        <div style="flex-grow: 1;border: 2pt solid black;border-radius: 4pt;font-weight: 500;">SALDO S/
+                        </div>
+                        <div
+                            style="box-sizing: border-box;width: 73pt;border: 2pt solid black;border-radius: 4pt;margin-inline-start: 2pt;text-align: end;padding-inline-end: 10pt;">
+                            000.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const buttonImp = document.querySelector("#action");
+    buttonImp.addEventListener("click", () => {
+        window.print();
+    });
+</script>
+
+</html>
