@@ -3,7 +3,7 @@ from django.template.response import TemplateResponse
 from customer.models import Customer
 from phase.models import Phase
 from employee.models import Employee
-
+from ..models import Work
 
 def index(request):
     if request.method == "GET":
@@ -18,4 +18,6 @@ def index(request):
 
 def proforma(request, pk):
     if request.method == "GET":
-        return TemplateResponse(request, 'work/report.html', {"pk": pk})
+        work = Work.objects.get(pk=pk)
+        resta = work.price - work.payment
+        return TemplateResponse(request, 'work/report.html', {"work": work,"pk": pk, "resta": resta})

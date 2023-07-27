@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reporte TekloCloud</title>
+    <title>Proforma Insanity</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
@@ -185,7 +185,7 @@
                     <div
                         style="font-size: 16pt; font-weight: 400;line-height: 40pt;font-family: 'Oswald', sans-serif;color: red;">
                         N°
-                        <span>0000000</span>
+                        <span>{{ work.id|stringformat:"07d" }}</span>
                     </div>
                 </div>
             </div>
@@ -196,21 +196,20 @@
                         <div>Socio Club:</div>
                         <div
                             style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
-                            Juan
-                            José Dolci Flores</div>
+                            {{ work.customer.name }}</div>
                     </div>
                     <div style="display: flex;line-height: 10pt;">
                         <div style="flex-grow: 1;display: flex;">
                             <div>Ref. Diseño:</div>
                             <div
                                 style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
-                            </div>
+                                {{ work.name }}</div>
                         </div>
                         <div style="width: 140pt;display: flex;">
                             <div>Cel.:</div>
                             <div
                                 style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
-                                954966113</div>
+                                {{ work.customer.phone }}</div>
                         </div>
                     </div>
                 </div>
@@ -219,15 +218,16 @@
                         <div>RUC:</div>
                         <div
                             style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
-                        </div>
+                            {{ work.customer.ruc }}</div>
                     </div>
                     <div style="display: flex;line-height: 10pt;margin-block-end: 12pt;">
                         <div>Fecha:</div>
                         <div
                             style="flex-grow: 1;border: 1pt solid black;border-radius: 4pt;margin-inline: 5pt;height: 18pt;margin-block-start: -8pt;line-height: 17pt;display: flex;text-align: center;">
-                            <div style="flex-grow: 4;">26</div>
-                            <div style="flex-grow: 4;border-inline: 1pt solid black;">07</div>
-                            <div style="flex-grow: 6;">2023</div>
+                            <div style="flex-grow: 4;">{{ work.creation_date|date:"d"|stringformat:"02s" }}</div>
+                            <div style="flex-grow: 4;border-inline: 1pt solid black;">{{ work.creation_date|date:"m" }}
+                            </div>
+                            <div style="flex-grow: 6;">{{ work.creation_date|date:"Y" }}</div>
                         </div>
                     </div>
                 </div>
@@ -239,8 +239,9 @@
             </div>
             <div
                 style="display: flex;font-family: 'Oswald', sans-serif;text-align: justify;border-radius: 5pt;border: 2pt solid black; margin-block-start: 2pt;min-block-size: 50pt;">
-                <div style="flex-grow: 1;border-inline-end: 2pt solid black;"></div>
-                <div style="width: 70pt;text-align: center;">S/. 000.00</div>
+                <div style="flex-grow: 1;border-inline-end: 2pt solid black;">{{ work.description }}</div>
+                <div style="width: 70pt;text-align: center;min-width: 70pt;">S/. {{ work.price|stringformat:".2f" }}
+                </div>
             </div>
             <div style="display: flex;">
                 <div
@@ -260,7 +261,7 @@
                                 <div>Ejecutivo de ventas:</div>
                                 <div
                                     style="flex-grow: 1;padding-inline-start: 10pt;border-block-end: 1pt dashed #585858;margin-inline: 5pt;">
-                                </div>
+                                    {{user.employee.name}}</div>
                             </div>
                             <div style="flex-grow: 1;display: flex;">
                                 <div>Ejecutivo creativo:</div>
@@ -283,21 +284,21 @@
                         </div>
                         <div
                             style="box-sizing: border-box;width: 73pt;border: 2pt solid black;border-radius: 4pt;margin-inline-start: 2pt;text-align: end;padding-inline-end: 10pt;">
-                            000.00</div>
+                            {{ work.price|stringformat:".2f" }}</div>
                     </div>
                     <div style="display: flex;margin-block-start: 2pt;">
                         <div style="flex-grow: 1;border: 2pt solid black;border-radius: 4pt;font-weight: 500;">A CUENTA
                             S/</div>
                         <div
                             style="box-sizing: border-box;width: 73pt;border: 2pt solid black;border-radius: 4pt;margin-inline-start: 2pt;text-align: end;padding-inline-end: 10pt;">
-                            000.00</div>
+                            {{ work.payment|stringformat:".2f" }}</div>
                     </div>
                     <div style="display: flex;margin-block-start: 2pt;">
                         <div style="flex-grow: 1;border: 2pt solid black;border-radius: 4pt;font-weight: 500;">SALDO S/
                         </div>
                         <div
                             style="box-sizing: border-box;width: 73pt;border: 2pt solid black;border-radius: 4pt;margin-inline-start: 2pt;text-align: end;padding-inline-end: 10pt;">
-                            000.00</div>
+                            {{ resta|stringformat:".2f" }}</div>
                     </div>
                 </div>
             </div>
